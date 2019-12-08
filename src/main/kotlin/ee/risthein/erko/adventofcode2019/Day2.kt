@@ -30,4 +30,34 @@ class Day2 {
         return integers
     }
 
+    fun getOutput(initialState: List<Int>, inputs: Inputs): Int {
+        val input = initialState.toMutableList()
+        input[1] = inputs.noun
+        input[2] = inputs.verb
+        val output = run(input)
+        return output[0]
+    }
+
+    fun getInputs(initialState: List<Int>, output: Int): Inputs {
+        for (noun in 0..99) {
+            for (verb in 0..99) {
+                val inputs = Inputs(noun, verb)
+                val calculatedOutput = getOutput(initialState, inputs)
+
+                if (calculatedOutput == output) {
+                    return inputs
+                }
+            }
+        }
+
+        throw error("Unknown inputs for output $output")
+    }
+
+    fun getPuzzleSolution(initialState: List<Int>, output: Int): Int {
+        val inputs = getInputs(initialState, output)
+        return 100 * inputs.noun + inputs.verb
+    }
+
+    data class Inputs(val noun: Int, val verb: Int)
 }
+

@@ -1,5 +1,6 @@
 package ee.risthein.erko.adventofcode2019
 
+import ee.risthein.erko.adventofcode2019.Day2.Inputs
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -60,10 +61,32 @@ class Day2Test {
 
     @Test
     fun `can calculate puzzle output`() {
-        val input = File(javaClass.getResource("/day2input.txt").toURI()).readText().split(",").map { it.toInt() }
+        val initialState = File(javaClass.getResource("/day2input.txt").toURI()).readText().split(",").map { it.toInt() }
+        val inputs = Inputs(12, 2)
 
-        val output = day2.run(input)
+        val output = day2.getOutput(initialState, inputs)
 
-        assertThat(output[0]).isEqualTo(3562624)
+        assertThat(output).isEqualTo(3562624)
+    }
+
+    @Test
+    fun `can find inputs for given output`() {
+        val initialState = File(javaClass.getResource("/day2input.txt").toURI()).readText().split(",").map { it.toInt() }
+        val output = 19690720
+
+        val inputs = day2.getInputs(initialState, output)
+
+        assertThat(inputs.noun).isEqualTo(82)
+        assertThat(inputs.verb).isEqualTo(98)
+    }
+
+    @Test
+    fun `can find puzzle solution`() {
+        val initialState = File(javaClass.getResource("/day2input.txt").toURI()).readText().split(",").map { it.toInt() }
+        val output = 19690720
+
+        val solution = day2.getPuzzleSolution(initialState, output)
+
+        assertThat(solution).isEqualTo(8298)
     }
 }
